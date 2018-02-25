@@ -22,7 +22,7 @@ import static java.util.Optional.ofNullable;
 @RequiredArgsConstructor
 public class TaskExecutor implements Runnable {
 
-    private static final int TIME_TO_WAIT_NEW_TASK = 10000;
+    private static final int TIME_TO_WAIT_NEW_TASK_IN_MILLIS = 10000;
     private final BlockingQueue<Pair<LocalDateTime, Callable>> queue;
     private final ExecutorService executorService;
 
@@ -46,7 +46,7 @@ public class TaskExecutor implements Runnable {
                 }
             } else {
                 log.debug("wait TaskExecutor");
-                Thread.sleep(TIME_TO_WAIT_NEW_TASK);
+                Thread.sleep(TIME_TO_WAIT_NEW_TASK_IN_MILLIS);
             }
         }
     }
