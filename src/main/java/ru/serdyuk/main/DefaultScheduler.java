@@ -21,7 +21,7 @@ import static java.util.Comparator.comparing;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class Scheduler {
+public class DefaultScheduler {
 
     private final ExecutorService executorService;
     private PriorityBlockingQueue<Pair<LocalDateTime, Callable>> queue = new PriorityBlockingQueue<>(100, comparing(Pair::getKey));;
