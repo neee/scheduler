@@ -1,4 +1,4 @@
-package ru.serdyuk.main;
+package ru.serdyuk.schedulers;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -21,22 +21,25 @@ import static java.util.Comparator.comparing;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class DefaultScheduler {
+public class DefaultScheduler implements Scheduler {
 
     private final ExecutorService executorService;
     private PriorityBlockingQueue<Pair<LocalDateTime, Callable>> queue = new PriorityBlockingQueue<>(100, comparing(Pair::getKey));;
     private volatile long taskCount;
 
+    @Override
     public void addTask(Pair<LocalDateTime, Callable> task) {
         queue.add(task);
         taskCount++;
         log.debug("total tasks: {}", taskCount);
     }
 
+    @Override
     public int tasksQueueSize() {
         return queue.size();
     }
 
+    @Override
     public void run() {
         final TaskExecutor taskExecutor = new TaskExecutor(queue, executorService);
         final Thread threadTaskExecutor = new Thread(taskExecutor);
@@ -47,7 +50,7 @@ public class DefaultScheduler {
     public static void main(String[] args) {
 
         final Random random = new Random(5);
-        final Scheduler scheduler = new Scheduler(Executors.newFixedThreadPool(5));
+        final Scheduler scheduler = new DefaultScheduler(Executors.newFixedThreadPool(5));
         scheduler.run();
 
         for (int i = 0; i < 10; i++) {
