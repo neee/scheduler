@@ -16,3 +16,15 @@ dependencies {
 
     testCompile 'org.junit.jupiter:junit-jupiter-api:5.0.0'
 }
+
+jar {
+    manifest {
+        attributes(
+                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                'Main-Class': 'ru.serdyuk.Main'
+        )
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
