@@ -14,5 +14,5 @@ dependencies {
     compile 'ch.qos.logback:logback-classic:1.2.3'
     compile 'org.apache.commons:commons-lang3:3.4'
 
-//    testCompile 'org.junit.jupiter:junit-jupiter-api:5.0.0'
+    testCompile 'org.junit.jupiter:junit-jupiter-api:5.0.0'
 }
